@@ -790,7 +790,7 @@ type Config struct {
 	LoggingConfigsDir string `yaml:"logging_configs_dir" envconfig:"logging_configs_dir" public:"true"`
 
 	// LoggingBinDir folder containing binaries for the log forwarder.
-	// Default (Linux): /opt/td-agent-bit/bin/
+	// Default (Linux): /opt/fluent-bit/bin/
 	// Default (Windows): ${agent_dir}\newrelic-integrations\logging (common example: C:\Program Files\New Relic\newrelic-infra\newrelic-integrations\logging\)
 	// Public: No
 	LoggingBinDir string `yaml:"logging_bin_dir" envconfig:"logging_bin_dir" public:"false"`
@@ -808,7 +808,7 @@ type Config struct {
 	LoggingRetryLimit string `yaml:"logging_retry_limit" envconfig:"logging_retry_limit" public:"true"`
 
 	// FluentBitExePath is the location from where the agent can execute fluent-bit.
-	// Default (Linux): ${logging_bin_dir}/td-agent-bit (common example: /opt/td-agent-bit/bin/td-agent-bit)
+	// Default (Linux): ${logging_bin_dir}/fluent-bit (common example: /opt/fluent-bit/bin/fluent-bit)
 	// Default (Windows): ${logging_bin_dir}\fluent-bit.exe (common example: C:\Program Files\New Relic\newrelic-infra\newrelic-integrations\logging\fluent-bit.exe)
 	// Public: No
 	FluentBitExePath string `yaml:"fluent_bit_exe_path" envconfig:"fluent_bit_exe_path" public:"false"`

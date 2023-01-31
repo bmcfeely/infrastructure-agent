@@ -76,6 +76,6 @@
     # Required packages. rpm version 4.11.3 does not support weak dependencies
 # not supported yet
 #    dependencies:
-#      - td-agent-bit
+#      - fluent-bit
   
   # end RHEL 9 amd64

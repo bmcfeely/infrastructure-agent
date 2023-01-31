@@ -63,6 +63,6 @@
     priority: extra
     # Recommended packages. If they fail to install installation of the agent will not be interrupted.
     recommends:
-      - td-agent-bit
+      - fluent-bit
   
   # end Debian systemd amd64

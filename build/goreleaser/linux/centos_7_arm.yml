@@ -73,6 +73,6 @@
     # Required packages. rpm version 4.11.3 does not support weak dependencies
     # disabled until logging packaging is properly handled for arm
   #    dependencies:
-  #      - td-agent-bit
+  #      - fluent-bit
   
   # end CentOS 7 arm

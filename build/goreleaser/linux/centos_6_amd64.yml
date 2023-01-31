@@ -63,6 +63,6 @@
     # Required packages. rpm version 4.11.3 does not support weak dependencies.
     # disabled as right now fb pkg is not built for centos-6
   #    dependencies:
-  #      - td-agent-bit
+  #      - fluent-bit
   
   # end CentOS 6 amd64
