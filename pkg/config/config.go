@@ -324,14 +324,15 @@ type Config struct {
 
 	// AgentDir is the directory where the agent stores files like cache, inventory, integrations, etc.
 	// Default (Linux): /var/db/newrelic-infra
-	// Default (MacOS): /usr/local/var/db/newrelic-infra/
-	// Default (Windows): C:\Program Files\NewRelic\newrelic-infra
+	// Default (MacOS amd64): /usr/local/var/db/newrelic-infra/
+	// Default (MacOS arm64): /opt/homebrew/var/db/newrelic-infra/
+	// Default (Windows): ${SystemDrive}:\Program Files\New Relic\newrelic-infra\ (common example: C:\Program Files\New Relic\newrelic-infra\)
 	// Public: Yes
 	AgentDir string `yaml:"agent_dir" envconfig:"agent_dir"`
 
 	// ConfigDir is the main directory where the agent stores configs.
 	// Default (Linux): /etc/newrelic-infra
-	// Default (Windows): C:\Program Files\NewRelic\newrelic-infra
+	// Default (Windows): C:\Program Files\New Relic\newrelic-infra
 	// Public: Yes
 	ConfigDir string `yaml:"config_dir" envconfig:"config_dir"`
 
@@ -377,7 +378,7 @@ type Config struct {
 
 	// MaxInventorySize sets the maximum size allowed for inventory data. If a plugin's inventory data exceeds this
 	// value it will be dropped. Inventory deltas will be grouped in batches bounded by this value before being sent
-	// to the NewRelic platform.
+	// to the New Relic platform.
 	// Default: 1000000 (1MB)
 	// Public: No
 	MaxInventorySize int `yaml:"max_inventory_size" envconfig:"max_inventory_size" public:"false"`
@@ -619,12 +620,12 @@ type Config struct {
 	PartitionsTTL string `yaml:"partitions_ttl" envconfig:"partitions_ttl" public:"false"`
 
 	// StartupConnectionTimeout Time duration to wait before timing-out the request the agents makes at startup to
-	// check the NewRelic platform availability. Used by defining reachability status of backend endpoints.
+	// check the New Relic platform availability. Used by defining reachability status of backend endpoints.
 	// Default: 10s
 	// Public: Yes
 	StartupConnectionTimeout string `yaml:"startup_connection_timeout" envconfig:"startup_connection_timeout"`
 
-	// StartupConnectionRetries Number of times the agent will retry the request to check the NewRelic platform
+	// StartupConnectionRetries Number of times the agent will retry the request to check the New Relic platform
 	// availability on startup before throwing an error. When set to a negative value, the agent will keep checking
 	// the connection until it succeeds.
 	// Default: 6
@@ -681,7 +682,7 @@ type Config struct {
 	// CompactEnabled When enabled, the delta storage will be compacted after its storage directory surpasses a
 	// certain threshold set by the CompactTreshold options.	Compaction works by removing the data of inactive plugins
 	// and the archived deltas of the active plugins; archive deltas are deltas that have already been sent to the
-	// NewRelic platform.
+	// New Relic platform.
 	// Default: True
 	// Public: No
 	CompactEnabled bool `yaml:"compaction_enabled" envconfig:"compaction_enabled" public:"false"`
@@ -789,13 +790,14 @@ type Config struct {
 	LoggingConfigsDir string `yaml:"logging_configs_dir" envconfig:"logging_configs_dir" public:"true"`
 
 	// LoggingBinDir folder containing binaries for the log forwarder.
-	// Default: /var/db/newrelic-infra/newrelic-integrations/logging/
+	// Default (Linux): /opt/td-agent-bit/bin/
+	// Default (Windows): ${agent_dir}\newrelic-integrations\logging (common example: C:\Program Files\New Relic\newrelic-infra\newrelic-integrations\logging\)
 	// Public: No
 	LoggingBinDir string `yaml:"logging_bin_dir" envconfig:"logging_bin_dir" public:"false"`
 
 	// LoggingHomeDir folder containing plugins and other required files for the log forwarder.
-	// Default (Linux): /var/db/newrelic-infra/newrelic-integrations/logging/
-	// Default (Windows): C:\Program Files\New Relic\newrelic-infra\newrelic-integrations\logging\
+	// Default (Linux): ${agent_dir}/newrelic-integrations/logging (common example: /var/db/newrelic-infra/newrelic-integrations/logging/)
+	// Default (Windows): ${agent_dir}\newrelic-integrations\logging (common example: C:\Program Files\New Relic\newrelic-infra\newrelic-integrations\logging\)
 	// Public: No
 	LoggingHomeDir string `yaml:"logging_home_dir" envconfig:"logging_home_dir" public:"false"`
 
@@ -806,19 +808,21 @@ type Config struct {
 	LoggingRetryLimit string `yaml:"logging_retry_limit" envconfig:"logging_retry_limit" public:"true"`
 
 	// FluentBitExePath is the location from where the agent can execute fluent-bit.
-	// Default (Linux): /opt/td-agent-bit/bin/td-agent-bit
-	// Default (Windows): C:\Program Files\New Relic\newrelic-infra\newrelic-integrations\logging\fluent-bit
+	// Default (Linux): ${logging_bin_dir}/td-agent-bit (common example: /opt/td-agent-bit/bin/td-agent-bit)
+	// Default (Windows): ${logging_bin_dir}\fluent-bit.exe (common example: C:\Program Files\New Relic\newrelic-infra\newrelic-integrations\logging\fluent-bit.exe)
 	// Public: No
 	FluentBitExePath string `yaml:"fluent_bit_exe_path" envconfig:"fluent_bit_exe_path" public:"false"`
 
 	// FluentBitParsersPath is the location where the FluentBit parsers.conf file is placed. It is currently required
 	// by the "syslog" input plugin, specifies several message parsers and comes out-of-the-box with FluentBit.
-	// Default: /var/db/newrelic-infra/newrelic-integrations/logging/parsers.conf
+	// Default (Linux): ${logging_home_dir}/parsers.conf (common example: /var/db/newrelic-infra/newrelic-integrations/logging/parsers.conf)
+	// Default (Windows): ${logging_home_dir}\parsers.conf (common example: C:\Program Files\New Relic\newrelic-infra\newrelic-integrations\logging\parsers.conf)
 	// Public: No
 	FluentBitParsersPath string `yaml:"fluent_bit_parsers_path" envconfig:"fluent_bit_parsers_path" public:"false"`
 
 	// FluentBitNRLibPath is the location from where fluent-bit can load the newrelic fluent-bit library.
-	// Default: /var/db/newrelic-infra/newrelic-integrations/logging/out_newrelic.so
+	// Default (Linux): ${logging_home_dir}/out_newrelic.so (common example: /var/db/newrelic-infra/newrelic-integrations/logging/out_newrelic.so)
+	// Default (Windows): ${logging_home_dir}\out_newrelic.dll (common example: C:\Program Files\New Relic\newrelic-infra\newrelic-integrations\logging\out_newrelic.dll)
 	// Public: No
 	FluentBitNRLibPath string `yaml:"fluent_bit_nr_lib_path" envconfig:"fluent_bit_nr_lib_path" public:"false"`
 
